@@ -69,9 +69,9 @@ class Scraper:
         return videos
 
     def get_video_url(self, video_id):
-        url = MAIN_URL + '/videos/config/video/%s.js' % video_id
+        url = MAIN_URL + 'videos/config/xxx/%s.js' % video_id
         json = self.__get_json(url)
-        return json['clip']['url']
+        return json['playlist'][1]['url']
 
     @staticmethod
     def __secs_from_duration(d):
@@ -86,6 +86,8 @@ class Scraper:
 
     def __get_json(self, url):
         html = self.__get_url(url)
+        if not '"' in html:
+            html = html.replace('\'', '"')
         return simplejson.loads(html)
 
     def __get_tree(self, url):
